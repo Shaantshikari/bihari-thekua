@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bihari talks</title>
+  <meta name="description" content="Bihari talks - Fresh Finds, Best Prices" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --card:#111827;
+      --soft:#1f2937;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --brand:#22c55e;
+      --brand2:#f59e0b;
+      --white:#fff;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#07111f,#0f172a 35%,#111827 100%);
+      color:var(--text);
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,92vw);margin:0 auto}
+    .hero{
+      min-height:100vh;
+      display:grid;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      padding:24px 0 60px;
+      background:
+        linear-gradient(rgba(4,8,20,.55),rgba(4,8,20,.65)),
+        url('https://i.ibb.co/n8gkvqpK/side-view-women-with-sari-shopping.jpg') center/cover no-repeat;
+    }
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:10px 0 24px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand h1{margin:0;font-size:1.6rem;letter-spacing:.4px}
+    .brand span{color:var(--brand2);font-size:.95rem}
+    .nav .email{font-size:.95rem;color:#f3f4f6;opacity:.9}
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
+    .hero-copy{
+      padding:20px 0;
+    }
+    .eyebrow{
+      display:inline-flex;
+      padding:8px 14px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
+      font-size:.92rem;
+      margin-bottom:18px;
+    }
+    .hero h2{
+      font-size:clamp(2.5rem,6vw,5.5rem);
+      line-height:.96;
+      margin:0 0 16px;
+      letter-spacing:-1.5px;
+    }
+    .hero p{
+      max-width:58ch;
+      color:#e5e7eb;
+      font-size:1.05rem;
+      line-height:1.7;
+      margin:0 0 26px;
+    }
+    .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:14px 20px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s transform,.2s opacity,.2s background;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--brand);color:#052e16}
+    .btn-secondary{background:rgba(255,255,255,.12);color:var(--white);border:1px solid rgba(255,255,255,.16)}
+    .hero-card{
+      background:rgba(17,24,39,.72);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(12px);
+      border-radius:28px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .hero-card img{
+      width:100%;
+      height:420px;
+      object-fit:cover;
+      border-radius:22px;
+      display:block;
+    }
+    section{padding:72px 0}
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      margin-bottom:24px;
+    }
+    .section-head h3{margin:0;font-size:2rem}
+    .section-head p{margin:0;color:var(--muted)}
+    .carousel-wrap{
+      overflow:hidden;
+      border-radius:24px;
+      position:relative;
+    }
+    .carousel{
+      display:flex;
+      gap:18px;
+      overflow-x:auto;
+      scroll-behavior:smooth;
+      padding:8px 4px 18px;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+    .carousel::-webkit-scrollbar{display:none}
+    .product-card{
+      flex:0 0 260px;
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .product-card img{
+      width:100%;
+      height:230px;
+      object-fit:cover;
+      display:block;
+    }
+    .product-body{padding:14px}
+    .product-body h4{margin:0 0 8px;font-size:1.05rem}
+    .product-body button{
+      width:100%;
+      margin-top:10px;
+      padding:12px 14px;
+      border:none;
+      border-radius:12px;
+      background:var(--brand2);
+      color:#111827;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .floating-cart{
+      position:fixed;
+      right:18px;
+      bottom:86px;
+      z-index:50;
+      width:58px;height:58px;
+      border-radius:50%;
+      border:none;
+      background:#2563eb;
+      color:#fff;
+      box-shadow:var(--shadow);
+      cursor:pointer;
+      font-size:1.2rem;
+    }
+    .cart-badge{
+      position:absolute;
+      top:-6px;right:-6px;
+      background:#ef4444;
+      color:#fff;
+      width:24px;height:24px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:.8rem;
+      font-weight:800;
+      border:2px solid #fff;
+    }
+    .whatsapp{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:58px;height:58px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#25d366;
+      color:white;
+      font-size:1.55rem;
+      box-shadow:var(--shadow);
+      z-index:50;
+    }
+    .drawer{
+      position:fixed;
+      top:0;right:-420px;
+      width:min(400px,100vw);
+      height:100vh;
+      background:#0b1220;
+      border-left:1px solid rgba(255,255,255,.1);
+      z-index:80;
+      transition:.28s right ease;
+      display:flex;
+      flex-direction:column;
+    }
+    .drawer.open{right:0}
+    .drawer header{
+      padding:18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .drawer main{padding:18px;overflow:auto;flex:1}
+    .drawer footer{
+      padding:18px;
+      border-top:1px solid rgba(255,255,255,.08);
+      background:#0f172a;
+    }
+    .close-btn{
+      background:transparent;border:none;color:#fff;font-size:1.4rem;cursor:pointer
+    }
+    .item{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .item img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+    .item .meta{flex:1}
+    .qty{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .qty button{
+      width:30px;height:30px;border:none;border-radius:8px;
+      background:#1f2937;color:#fff;cursor:pointer
+    }
+    .form{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+    .form input, .form textarea{
+      width:100%;
+      padding:14px 15px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#111827;
+      color:#fff;
+      outline:none;
+    }
+    .form textarea{min-height:110px;resize:vertical}
+    .muted{color:var(--muted)}
+    .footer-note{
+      text-align:center;
+      color:var(--muted);
+      padding:24px 0 40px;
+      font-size:.95rem;
+    }
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr;gap:18px}
+      .hero-card img{height:320px}
+      .section-head{flex-direction:column;align-items:start}
+    }
+  </style>
+</head>
+<body>
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="nav">
+        <div class="brand">
+          <h1>Bihari talks</h1>
+          <span>Fresh Finds, Best Prices</span>
+        </div>
+        <div class="email">Owner: anuragkumarvats63@gmail.com</div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Modern shopkeeper storefront for mobile and desktop</div>
+          <h2>Fresh Finds, Best Prices</h2>
+          <p>Browse featured products, add them to your cart, and place an order instantly through EmailJS. Built as a fast, clean, single-page website with no backend required.</p>
+          <div class="cta-row">
+            <button class="btn btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+            <button class="btn btn-secondary" onclick="openCart()">View Cart</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="https://i.ibb.co/n8gkvqpK/side-view-women-with-sari-shopping.jpg" alt="Hero image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h3>Featured Products</h3>
+          <p>Swipe horizontally or let the carousel move automatically.</p>
+        </div>
+      </div>
+
+      <div class="carousel-wrap">
+        <div class="carousel" id="carousel">
+          <div class="product-card">
+            <img src="https://i.ibb.co/HLcrws8G/Whats-App-Image-2026-06-20-at-12-21-51.jpg" alt="Product image 1">
+            <div class="product-body">
+              <h4>Image 1</h4>
+              <div class="muted">Featured shop product</div>
+              <button onclick="addToCart('Image 1','https://i.ibb.co/HLcrws8G/Whats-App-Image-2026-06-20-at-12-21-51.jpg')">Add to Cart</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <img src="https://i.ibb.co/bMMJSw52/Whats-App-Image-2026-06-20-at-12-26-59.jpg" alt="Product image 2">
+            <div class="product-body">
+              <h4>Image 2</h4>
+              <div class="muted">Featured shop product</div>
+              <button onclick="addToCart('Image 2','https://i.ibb.co/bMMJSw52/Whats-App-Image-2026-06-20-at-12-26-59.jpg')">Add to Cart</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <img src="https://i.ibb.co/vxDSNSS0/Whats-App-Image-2026-06-20-at-12-27-00.jpg" alt="Product image 3">
+            <div class="product-body">
+              <h4>Image 3</h4>
+              <div class="muted">Featured shop product</div>
+              <button onclick="addToCart('Image 3','https://i.ibb.co/vxDSNSS0/Whats-App-Image-2026-06-20-at-12-27-00.jpg')">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="drawer" id="drawer">
+    <header>
+      <strong>Cart / Order Form</strong>
+      <button class="close-btn" onclick="closeCart()">×</button>
+    </header>
+    <main>
+      <div id="cartItems"></div>
+
+      <form class="form" id="orderForm">
+        <input type="text" name="customer_name" id="customer_name" placeholder="Customer name" required>
+        <input type="tel" name="customer_phone" id="customer_phone" placeholder="Phone number" required>
+        <textarea name="order_list" id="order_list" placeholder="Cart items will appear here" readonly></textarea>
+        <button class="btn btn-primary" type="submit">Send Order</button>
+        <div class="muted" style="font-size:.92rem">Email will be sent to: anuragkumarvats63@gmail.com</div>
+      </form>
+    </main>
+  </div>
+
+  <button class="floating-cart" onclick="openCart()">
+    🛒
+    <span class="cart-badge" id="cartCount">0</span>
+  </button>
+
+  <a class="whatsapp" href="https://wa.me/8877509487" target="_blank" aria-label="WhatsApp">💬</a>
+
+  <div class="footer-note container">© Bihari talks</div>
+
+  <script>
+    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    const OWNER_EMAIL = "anuragkumarvats63@gmail.com";
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    const cart = [];
+    const drawer = document.getElementById('drawer');
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const orderList = document.getElementById('order_list');
+
+    function openCart(){ drawer.classList.add('open'); renderCart(); }
+    function closeCart(){ drawer.classList.remove('open'); }
+
+    function addToCart(name, image){
+      const existing = cart.find(i => i.name === name);
+      if(existing) existing.qty += 1;
+      else cart.push({name, image, qty:1});
+      renderCart();
+      openCart();
+    }
+
+    function removeItem(name){
+      const i = cart.findIndex(x => x.name === name);
+      if(i > -1) cart.splice(i,1);
+      renderCart();
+    }
+
+    function changeQty(name, delta){
+      const item = cart.find(x => x.name === name);
+      if(!item) return;
+      item.qty += delta;
+      if(item.qty <= 0) removeItem(name);
+      renderCart();
+    }
+
+    function renderCart(){
+      cartCount.textContent = cart.reduce((s,i)=>s+i.qty,0);
+      if(!cart.length){
+        cartItems.innerHTML = '<p class="muted">Your cart is empty.</p>';
+        orderList.value = '';
+        return;
+      }
+      cartItems.innerHTML = cart.map(item => `
+        <div class="item">
+          <img src="${item.image}" alt="${item.name}">
+          <div class="meta">
+            <div><strong>${item.name}</strong></div>
+            <div class="muted">Qty: ${item.qty}</div>
+          </div>
+          <div class="qty">
+            <button type="button" onclick="changeQty('${item.name}',-1)">−</button>
+            <button type="button" onclick="changeQty('${item.name}',1)">+</button>
+          </div>
+        </div>
+      `).join('');
+      orderList.value = cart.map(i => `${i.name} x ${i.qty}`).join('\n');
+    }
+
+    document.getElementById('orderForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      if(!cart.length){
+        alert('Add at least one item to the cart.');
+        return;
+      }
+
+      const templateParams = {
+        to_email: OWNER_EMAIL,
+        customer_name: document.getElementById('customer_name').value.trim(),
+        customer_phone: document.getElementById('customer_phone').value.trim(),
+        order_list: cart.map(i => `${i.name} x ${i.qty}`).join('\n'),
+        message: `New order from ${document.getElementById('customer_name').value.trim()}`
+      };
+
+      try{
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        alert('Order sent successfully!');
+        cart.length = 0;
+        this.reset();
+        renderCart();
+        closeCart();
+      }catch(err){
+        console.error(err);
+        alert('Failed to send order. Please check EmailJS IDs and template variables.');
+      }
+    });
+
+    renderCart();
+
+    const carousel = document.getElementById('carousel');
+    let autoScroll = setInterval(() => {
+      if(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 5){
+        carousel.scrollTo({left:0, behavior:'smooth'});
+      } else {
+        carousel.scrollBy({left:280, behavior:'smooth'});
+      }
+    }, 2500);
+
+    carousel.addEventListener('mouseenter', ()=>clearInterval(autoScroll));
+    carousel.addEventListener('mouseleave', ()=>{
+      autoScroll = setInterval(() => {
+        if(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 5){
+          carousel.scrollTo({left:0, behavior:'smooth'});
+        } else {
+          carousel.scrollBy({left:280, behavior:'smooth'});
+        }
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
