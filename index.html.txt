@@ -1,0 +1,53 @@
+Create a complete single-page shopkeeper website with the following:
+
+Shop Details:
+
+Shop Name: Bihari talks
+
+Tagline: [e.g. "Fresh Finds, Best Prices"]
+
+Owner's Email:anuragkumarvats63@gmail.com
+
+Hero Section:
+
+Full-width hero image url is  mentioned below 
+
+• Big heading + a "Shop Now" button that scrolls to products
+
+Product Carousel images are also mentioned below 
+
+• Horizontal scrollable or auto-sliding
+
+carousel
+
+ . each product card has; image name
+
+  . use these product images: 
+
+cart and email feature:
+
+. floating cart icon showing item count
+
+. cart/drawer/modal listing added items
+
+.Send Order" button that uses EmailJS (free) to send the cart details to the owner's email
+
+• Email should include: customer name, phone number, and list of items Design:
+
+Clean, mobile-first, modern look WhatsApp floating button linking to wa.me/8877509487
+
+• No backend needed - pure HTML, CSS, JavaScript
+
+Hero image
+https://i.ibb.co/n8gkvqpK/side-view-women-with-sari-shopping.jpg
+
+product image 
+
+https://i.ibb.co/HLcrws8G/Whats-App-Image-2026-06-20-at-12-21-51.jpg
+
+https://i.ibb.co/bMMJSw52/Whats-App-Image-2026-06-20-at-12-26-59.jpg
+
+https://i.ibb.co/vxDSNSS0/Whats-App-Image-2026-06-20-at-12-27-00.jpg
+
+also integrate the form for the cart order that would be placed by customer 
+
